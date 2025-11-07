@@ -1,0 +1,181 @@
+﻿@model InventoryTrackSystem.Model.Dtos.Product.ProductCreateDto
+@{
+    ViewData["Title"] = "Yeni Ürün Ekle";
+    Layout = "_Layout";
+}
+
+<div class="bg-light py-4">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-11 col-lg-10 col-xl-9">
+         
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb bg-white rounded-3 px-3 py-2 shadow-sm">
+                        <li class="breadcrumb-item">
+                            <a href="@Url.Action("List", "Product")" class="text-decoration-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-house-door me-1" viewBox="0 0 16 16">
+                                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4z"/>
+                                </svg>
+                                Ürünler
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Yeni Ürün Ekle</li>
+                    </ol>
+                </nav>
+
+                <div class="mb-4">
+                    <div class="d-flex align-items-center">
+                        <div class="bg-white rounded-3 p-3 shadow-sm me-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-plus-circle text-primary" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <h2 class="fw-bold mb-1">Yeni Ürün Ekle</h2>
+                            <p class="text-muted mb-0 small">Formu doldurarak sisteme yeni ürün ekleyin</p>
+                        </div>
+                    </div>
+                </div>
+
+                @if (TempData["Success"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
+                        <div class="d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill me-2" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                            </svg>
+                            <div><strong>Başarılı!</strong> @TempData["Success"]</div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+                
+                @if (ViewBag.ErrorMessage != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show shadow-sm border-0 mb-4" role="alert">
+                        <div class="d-flex align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-triangle-fill me-2" viewBox="0 0 16 16">
+                                <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+                            </svg>
+                            <div><strong>Hata!</strong> @ViewBag.ErrorMessage</div>
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                <div class="card border-0 shadow-sm rounded-4">
+                    <div class="card-body p-4 p-md-5">
+                        @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="border rounded-3 p-4 bg-light bg-opacity-50 h-100">
+                                        <h5 class="fw-bold mb-4 text-dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle me-2 text-primary" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
+                                            </svg>
+                                            Temel Bilgiler
+                                        </h5>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small">Ürün Adı <span class="text-danger">*</span></label>
+                                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control form-control-lg rounded-3", placeholder = "Örn: iPhone 15 Pro" })
+                                            @Html.ValidationMessageFor(x => x.Name, "", new { @class = "text-danger small mt-1 d-block" })
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small">Ürün Kodu <span class="text-danger">*</span></label>
+                                            @Html.TextBoxFor(x => x.Code, new { @class = "form-control form-control-lg rounded-3", placeholder = "Örn: PRD-2024-001" })
+                                            @Html.ValidationMessageFor(x => x.Code, "", new { @class = "text-danger small mt-1 d-block" })
+                                        </div>
+
+                                        <div class="mb-0">
+                                            <label class="form-label fw-semibold small">Marka <span class="text-danger">*</span></label>
+                                            @Html.DropDownListFor(x => x.BrandId,
+                                                new SelectList(ViewBag.Brands, "Id", "Name"),
+                                                "Marka Seçiniz",
+                                                new { @class = "form-select form-select-lg rounded-3" })
+                                            @Html.ValidationMessageFor(x => x.BrandId, "", new { @class = "text-danger small mt-1 d-block" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <div class="border rounded-3 p-4 bg-light bg-opacity-50 h-100">
+                                        <h5 class="fw-bold mb-4 text-dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-calculator me-2 text-success" viewBox="0 0 16 16">
+                                                <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                                <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                                            </svg>
+                                            Stok & Fiyatlandırma
+                                        </h5>
+
+                                        <div class="mb-3">
+                                            <label class="form-label fw-semibold small">Stok Miktarı <span class="text-danger">*</span></label>
+                                            <div class="input-group input-group-lg">
+                                                @Html.TextBoxFor(x => x.Stock, new { @class = "form-control rounded-start-3", type = "number", min = "0", placeholder = "100" })
+                                                <span class="input-group-text bg-white rounded-end-3">adet</span>
+                                            </div>
+                                            @Html.ValidationMessageFor(x => x.Stock, "", new { @class = "text-danger small mt-1 d-block" })
+                                        </div>
+
+                                        <div class="mb-0">
+                                            <label class="form-label fw-semibold small">Birim Fiyat <span class="text-danger">*</span></label>
+                                            <div class="input-group input-group-lg">
+                                                @Html.TextBoxFor(x => x.Price, new { @class = "form-control rounded-start-3", type = "number", step = "0.01", min = "0", placeholder = "999.99" })
+                                                <span class="input-group-text bg-white rounded-end-3 fw-semibold text-success">₺</span>
+                                            </div>
+                                            @Html.ValidationMessageFor(x => x.Price, "", new { @class = "text-danger small mt-1 d-block" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="border rounded-3 p-4 bg-light bg-opacity-50">
+                                        <h5 class="fw-bold mb-3 text-dark">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-chat-left-text me-2 text-info" viewBox="0 0 16 16">
+                                                <path d="M14 1a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H4.414A2 2 0 0 0 3 11.586l-2 2V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12.793a.5.5 0 0 0 .854.353l2.853-2.853A1 1 0 0 1 4.414 12H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                                <path d="M3 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5M3 6a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 6m0 2.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5"/>
+                                            </svg>
+                                            Ürün Açıklaması
+                                        </h5>
+                                        @Html.TextAreaFor(x => x.Description, new { @class = "form-control form-control-lg rounded-3", rows = "4", placeholder = "Ürün hakkında detaylı bilgi, özellikler ve kullanım alanlarını yazınız..." })
+                                        @Html.ValidationMessageFor(x => x.Description, "", new { @class = "text-danger small mt-1 d-block" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4 pt-4 border-top">
+                                <div class="col-12">
+                                    <div class="d-flex flex-column flex-sm-row gap-3 justify-content-end">
+                                        <a href="@Url.Action("List", "Product")" class="btn btn-lg btn-outline-secondary rounded-3 px-4">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left me-2" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                                            </svg>
+                                            İptal
+                                        </a>
+                                        <button type="submit" class="btn btn-lg btn-success rounded-3 px-5 shadow-sm">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-circle me-2" viewBox="0 0 16 16">
+                                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                                <path d="m10.97 4.97-.02.022-3.473 4.425-2.093-2.094a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05"/>
+                                            </svg>
+                                            Ürünü Kaydet
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

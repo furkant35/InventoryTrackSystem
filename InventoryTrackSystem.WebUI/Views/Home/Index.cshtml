@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold display-5 text-dark mb-2">
+            <i class="bi bi-boxes me-2 text-primary"></i> InventoryTrackSystem
+        </h1>
+        <p class="text-muted fs-5">
+            Stok ve marka yönetimini kolayca yönetin
+        </p>
+    </div>
+
+    <div class="row justify-content-center g-4">
+        <div class="col-md-5">
+            <div class="card border-0 shadow-lg h-100 text-center rounded-4">
+                <div class="card-body p-5 d-flex flex-column justify-content-center align-items-center">
+                    <div class="bg-primary bg-opacity-10 rounded-circle p-4 mb-3">
+                        <i class="bi bi-box-seam text-primary" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-2">Ürün Yönetimi</h4>
+                    <p class="text-muted mb-4">
+                        Tüm ürünlerinizi görüntüleyin, düzenleyin ve stok takibini kolayca yapın.
+                    </p>
+                    <a href="@Url.Action("List", "Product")" class="btn btn-primary btn-lg px-4 rounded-3 shadow-sm">
+                        <i class="bi bi-arrow-right-circle me-2"></i> Ürün Listesine Git
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-5">
+            <div class="card border-0 shadow-lg h-100 text-center rounded-4">
+                <div class="card-body p-5 d-flex flex-column justify-content-center align-items-center">
+                    <div class="bg-warning bg-opacity-25 rounded-circle p-4 mb-3">
+                        <i class="bi bi-tags-fill text-warning" style="font-size: 2.5rem;"></i>
+                    </div>
+                    <h4 class="fw-bold text-dark mb-2">Marka Yönetimi</h4>
+                    <p class="text-muted mb-4">
+                        Tüm markalarınızı yönetin, açıklamalarını düzenleyin ve yeni markalar ekleyin.
+                    </p>
+                    <a href="@Url.Action("List", "Brand")" class="btn btn-warning btn-lg px-4 rounded-3 shadow-sm text-dark fw-semibold">
+                        <i class="bi bi-arrow-right-circle me-2"></i> Marka Listesine Git
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

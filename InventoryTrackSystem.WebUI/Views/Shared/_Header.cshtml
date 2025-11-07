@@ -1,0 +1,96 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    var user = HttpContextAccessor.HttpContext?.User;
+    bool isAuth = user?.Identity?.IsAuthenticated ?? false;
+    string? userName = user?.Identity?.Name;
+    string currentController = ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+}
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark border-bottom border-primary border-opacity-25 fixed-top shadow-sm">
+    <div class="container-fluid px-4">
+
+        <a class="navbar-brand fw-bold text-uppercase d-flex align-items-center gap-2" href="@Url.Action("Index", "Home")">
+            <i class="bi bi-boxes text-primary fs-4"></i>
+            Inventory<span class="text-primary">Track</span>System
+        </a>
+
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMain">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+
+                @if (isAuth)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold @(currentController == "Home" ? "active text-primary border-bottom border-primary" : "")"
+                           href="@Url.Action("Index", "Home")">
+                            <i class="bi bi-house-door me-1"></i> Ana Sayfa
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold @(currentController == "Product" ? "active text-primary border-bottom border-primary" : "")"
+                           href="@Url.Action("List", "Product")">
+                            <i class="bi bi-box-seam me-1"></i> Ürünler
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold @(currentController == "Brand" ? "active text-primary border-bottom border-primary" : "")"
+                           href="@Url.Action("List", "Brand")">
+                            <i class="bi bi-tags-fill me-1"></i> Markalar
+                        </a>
+                    </li>
+                }
+            </ul>
+
+            <ul class="navbar-nav ms-auto align-items-center">
+
+                @if (isAuth)
+                {
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center gap-2 fw-semibold text-white"
+                           href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="https://ui-avatars.com/api/?name=@userName&background=0D6EFD&color=fff&size=32"
+                                 alt="Avatar" class="rounded-circle border border-2 border-primary" width="32" height="32" />
+                            <span class="d-none d-sm-inline">Hoşgeldin, @userName</span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end mt-2 shadow-sm rounded-3">
+                            <li>
+                                <a class="dropdown-item d-flex align-items-center gap-2" href="#">
+                                    <i class="bi bi-person text-primary"></i> Profilim
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item text-danger d-flex align-items-center gap-2"
+                                   href="@Url.Action("Logout", "Auth")">
+                                    <i class="bi bi-box-arrow-right"></i> Çıkış Yap
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item me-2">
+                        <a class="btn btn-outline-light btn-sm fw-semibold px-3" href="@Url.Action("Login", "Auth")">
+                            <i class="bi bi-box-arrow-in-right me-1"></i> Giriş Yap
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn btn-primary btn-sm fw-semibold px-3" href="@Url.Action("Register", "Auth")">
+                            <i class="bi bi-person-plus me-1"></i> Kayıt Ol
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="pt-5 mt-2"></div>
